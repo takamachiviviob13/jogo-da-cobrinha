@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Neon Snake: FRANÇOIS CAMPAIGN (François Edition)</title>
+    <title>Neon Snake: FINAL VERSION</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -42,6 +42,32 @@
             overflow: hidden;
         }
 
+        /* --- CONFIGURAÇÃO DO VIDEO DE FUNDO --- */
+        #videoContainer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+            display: none;
+            opacity: 0.6;
+        }
+
+        #bgVideo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+
         /* CRT & VISUAL UPGRADES */
         .crt-frame {
             position: relative;
@@ -53,6 +79,7 @@
             align-items: center;
             overflow: hidden;
             background: radial-gradient(circle, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.6) 100%);
+            z-index: 2;
         }
 
         .crt-frame::before {
@@ -79,6 +106,7 @@
             aspect-ratio: 1 / 1;
             margin: 10px 0;
             background: #000;
+            transition: background 0.5s;
         }
 
         .controls-area {
@@ -97,6 +125,7 @@
             display: block;
             width: 100%;
             height: 100%;
+            transition: background 0.5s;
         }
 
         .shake {
@@ -104,27 +133,10 @@
         }
 
         @keyframes shake {
-
-            10%,
-            90% {
-                transform: translate3d(-4px, 0, 0);
-            }
-
-            20%,
-            80% {
-                transform: translate3d(8px, 0, 0);
-            }
-
-            30%,
-            50%,
-            70% {
-                transform: translate3d(-8px, 0, 0);
-            }
-
-            40%,
-            60% {
-                transform: translate3d(8px, 0, 0);
-            }
+            10%, 90% { transform: translate3d(-4px, 0, 0); }
+            20%, 80% { transform: translate3d(8px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-8px, 0, 0); }
+            40%, 60% { transform: translate3d(8px, 0, 0); }
         }
 
         .damage-flash {
@@ -132,15 +144,8 @@
         }
 
         @keyframes damage {
-            0% {
-                box-shadow: inset 0 0 80px var(--mine);
-                border-color: var(--mine);
-            }
-
-            100% {
-                box-shadow: 0 0 40px rgba(0, 255, 204, 0.15);
-                border-color: #444;
-            }
+            0% { box-shadow: inset 0 0 80px var(--mine); border-color: var(--mine); }
+            100% { box-shadow: 0 0 40px rgba(0, 255, 204, 0.15); border-color: #444; }
         }
 
         .glitch-active {
@@ -211,7 +216,6 @@
             transition: width 0.2s, background-color 0.2s;
         }
 
-        /* SHIELD BAR ADDITION */
         .shield-track {
             width: 100%;
             height: 4px;
@@ -234,19 +238,9 @@
         }
 
         @keyframes pulse-crit {
-            0% {
-                opacity: 1;
-                box-shadow: 0 0 15px var(--integrity-crit);
-            }
-
-            50% {
-                opacity: 0.4;
-            }
-
-            100% {
-                opacity: 1;
-                box-shadow: 0 0 15px var(--integrity-crit);
-            }
+            0% { opacity: 1; box-shadow: 0 0 15px var(--integrity-crit); }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; box-shadow: 0 0 15px var(--integrity-crit); }
         }
 
         .combo-box {
@@ -299,9 +293,7 @@
         }
 
         @keyframes blink {
-            50% {
-                opacity: 0.3;
-            }
+            50% { opacity: 0.3; }
         }
 
         .status-bar {
@@ -662,6 +654,13 @@
 
 <body>
 
+    <!-- VIDEO DE FUNDO DO FINAL BOSS -->
+    <div id="videoContainer">
+        <video id="bgVideo" playsinline muted loop>
+            <source src="video/Welcome to Violence Official Video.mp4" type="video/mp4">
+        </video>
+    </div>
+
     <svg style="display: none;">
         <defs>
             <filter id="chromaticAberration">
@@ -739,8 +738,8 @@
             <!-- SHOP SCREEN -->
             <div id="shopScreen" class="menu-screen hidden" style="background: rgba(0,0,0,0.95);">
                 <h1 style="font-size: 1.8rem; margin-bottom: 10px; text-shadow: 0 0 10px var(--gold);">THE ARMORY</h1>
-                <div class="label">PREPARE-SE PARA O TITÃƒ</div>
-                <div class="label" style="margin-bottom: 20px; color: #fff;">CRÃ‰DITOS: <span id="shopCredits"
+                <div class="label">PREPARE-SE PARA O TITÃ</div>
+                <div class="label" style="margin-bottom: 20px; color: #fff;">CRÉDITOS: <span id="shopCredits"
                         style="color: var(--gold); font-size: 1.2rem;">0</span></div>
 
                 <div class="shop-grid">
@@ -748,7 +747,7 @@
                     <div class="shop-item">
                         <div>
                             <h3>ESCUDO DE ENERGIA</h3>
-                            <p>Adiciona uma barra extra de Proteçao (nao funciona ainda).</p>
+                            <p>Adiciona uma barra extra de Proteçao.</p>
                         </div>
                         <div class="shop-price">200 PTS</div>
                         <button class="shop-btn" id="btnShield" onclick="buyItem('shield')">COMPRAR</button>
@@ -770,7 +769,7 @@
                         <div class="level-tag" id="tagTurretLvl">LVL 0</div>
                         <div>
                             <h3>TORRE AUTOMATICA</h3>
-                            <p>Dispara contra drones inimigos.</p>
+                            <p>Dispara contra drones. Nivel maximo tem tiro duplo.</p>
                         </div>
                         <div class="shop-price" id="priceTurret">500 PTS</div>
                         <button class="shop-btn" id="btnTurret" onclick="buyItem('turret')">UPGRADE</button>
@@ -781,7 +780,7 @@
                         <div>
                             <h3>HAMMER DE DRONE</h3>
                             <p>Destroi drones ao colidir de frente.</p>
-                            <div class="owned-tag hidden" id="tagRam">LENDÃ RIO</div>
+                            <div class="owned-tag hidden" id="tagRam">LENDÁRIO</div>
                         </div>
                         <div class="shop-price" style="color: var(--danger);">1500 PTS</div>
                         <button class="shop-btn" id="btnRam" onclick="buyItem('ram')">COMPRAR</button>
@@ -798,7 +797,7 @@
 
                 <div class="pause-controls">
                     <div class="control-row">
-                        <span>MÃšSICA</span>
+                        <span>MUSICA</span>
                         <div class="vol-ctrl">
                             <div class="vol-btn" onclick="adjVol('music', -10)">-</div>
                             <div id="volMusicDisp" class="vol-display">50</div>
@@ -846,7 +845,7 @@
             <canvas id="gameCanvas" width="600" height="600"></canvas>
         </div>
 
-        <!-- BOTÃƒO DE TURBO FORA DO JOGO -->
+        <!-- BOTÃO DE TURBO FORA DO JOGO -->
         <div class="controls-area">
             <button class="dash-btn-large" id="btnDash">TURBO</button>
         </div>
@@ -872,6 +871,10 @@
         const bossHint = document.getElementById('bossHint');
         const integrityFill = document.getElementById('integrityFill');
 
+        // Video Elements
+        const videoContainer = document.getElementById('videoContainer');
+        const bgVideo = document.getElementById('bgVideo');
+
         // Shop Elements
         const shopScreen = document.getElementById('shopScreen');
         const shopCredits = document.getElementById('shopCredits');
@@ -883,28 +886,28 @@
         const TILES = canvas.width / GRID;
         let BASE_SPEED = 90;
 
-        // --- BOSS CONFIGURATION (Separado para facilitar ajustes) ---
+        // --- BOSS CONFIGURATION ---
         const BOSS_STATS = {
             1: { 
                 name: "TITAN CLASS 1", 
-                hp: 15, 
+                hp: 50, 
                 speed: 2.0, 
                 color: 'red',
-                turretDmg: 0.2 // Dano normal da metralhadora
+                turretDmg: 0.2 
             },
             2: { 
                 name: "TITAN CLASS 2", 
-                hp: 30, 
-                speed: 3.5, 
+                hp: 80, 
+                speed: 5.0, 
                 color: '#bd00ff',
-                turretDmg: 0.1 // 50% de resistência a metralhadora
+                turretDmg: 0.3
             },
             3: { 
                 name: "OMEGA TITAN", 
-                hp: 100, // Tanker
-                speed: 5.5, // Muito Rápido
+                hp: 200, 
+                speed: 2.5, 
                 color: '#ffd700',
-                turretDmg: 0.02 // 90% de resistência (força o uso do Turbo/Dash)
+                turretDmg: 0.1 
             }
         };
 
@@ -912,6 +915,7 @@
         let gameState = 'MENU';
         let lastTime = 0;
         let logicTimer = 0;
+        let lastDamageTime = 0; 
 
         // Snake segments with grid coords
         let snake = [];
@@ -934,18 +938,21 @@
         let particles = [];
         let portals = [];
         let drones = [];
-        let projectiles = []; // New: Turret Projectiles
+        let projectiles = []; 
+        let floatingTexts = []; 
         let boss = null;
+        let isFinalBossActive = false; // Controls video visibility
 
         let currentBossLevel = 1;
-        let nextBossScore = 600; // Phase 1 ends roughly here
+        let nextBossScore = 600;
 
         // INVENTORY & ECONOMY
         let inventory = {
             shield: 0,
             magnet: false,
-            turretLevel: 0, // 0 = none, 1 = simple, 2 = fast, 3 = heavy
-            ram: false
+            turretLevel: 0, 
+            ram: false,
+            vampirism: true 
         };
         let lastTurretShot = 0;
 
@@ -959,31 +966,37 @@
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         let actx;
         let masterGain;
-        let volMusic = 0.5;
-        let volSfx = 0.8;
+        let volMusic = 0.3;
+        let volSfx = 0.5;
         let muteFrancois = false;
         let currentMusic = null;
         let currentVoice = null;
         let musicInterval = null;
+        let audioInitialized = false;
 
         const TRACKS = {
             menu: "sons/HUNTING FOR YOUR DREAM.mp3",
             level: "sons/Jessica - The Allman Brothers Band.mp3",
-            boss1: "sons/One.mp3",
+            boss1: "sons/Thunderstruck.mp3",
             boss2: "sons/Ozzy Osbourne - Mr. Crowley.mp3",
-            boss3: "sons/Thunderstruck.mp3"
+            boss3: "sons/One.mp3"
         };
 
+        // Inicializa áudio apenas na interação, mas não toca nada automaticamente
+        // para evitar que toque a música de morte ou menu antes da hora.
         document.addEventListener('click', function initAudioOnInteraction() {
             if (!actx) {
                 actx = new AudioContext();
                 masterGain = actx.createGain();
                 masterGain.connect(actx.destination);
-                if (gameState === 'MENU' && !currentMusic) {
-                    playMusic('menu');
-                }
             }
             if (actx.state === 'suspended') actx.resume();
+            
+            // Só toca música do menu se estivermos no menu e ainda não estiver tocando
+            if (gameState === 'MENU' && !currentMusic && !audioInitialized) {
+                playMusic('menu');
+                audioInitialized = true;
+            }
         }, { once: false });
 
         function playMusic(trackKey) {
@@ -1000,7 +1013,7 @@
             let playPromise = audio.play();
             if (playPromise !== undefined) {
                 playPromise.catch(error => {
-                    console.log("Aguardando interaÃ§Ã£o para tocar mÃºsica.");
+                    console.log("Aguardando interaçao para tocar musica.");
                 });
             }
             currentMusic = audio;
@@ -1039,13 +1052,10 @@
             voice.volume = 1.0;
 
             currentVoice = voice;
-            let previousState = gameState;
-            // Dont block loop completely but wait for voice
-
+            
             voice.play().then(() => {
                 voice.onended = () => {
                     currentVoice = null;
-                    // CORREÇÃO: Só volta a música se o jogo NÃO acabou
                     if (currentMusic && gameState !== 'SHOP' && gameState !== 'GAMEOVER' && gameState !== 'WIN') { 
                         currentMusic.volume = volMusic;
                         currentMusic.play();
@@ -1054,7 +1064,6 @@
                 };
             }).catch(e => {
                 console.log("Erro ao tocar voz:", e);
-                // CORREÇÃO: Mesma verificação de erro
                 if (currentMusic && gameState !== 'SHOP' && gameState !== 'GAMEOVER' && gameState !== 'WIN') currentMusic.play();
                 if (callback) callback();
             });
@@ -1086,7 +1095,7 @@
             if (type === 'bossHit') { playSynthTone(50, 'sawtooth', 0.5); createExplosion(canvas.width / 2, canvas.height / 2, '#fff', 20); }
             if (type === 'die') playSynthTone(100, 'sawtooth', 0.8);
             if (type === 'powerup') { playSynthTone(600, 'square', 0.1); setTimeout(() => playSynthTone(1200, 'square', 0.3), 100); }
-            if (type === 'shoot') { playSynthTone(400, 'square', 0.05, -200); } // Turret Sound
+            if (type === 'shoot') { playSynthTone(400, 'square', 0.05, -200); }
             if (type === 'buy') { playSynthTone(1000, 'sine', 0.1); playSynthTone(1500, 'sine', 0.1); }
         }
 
@@ -1104,9 +1113,18 @@
             muteFrancois = cb.checked;
         }
 
+        function spawnFloatingText(x, y, text, color) {
+            floatingTexts.push({
+                x: x, y: y,
+                text: text,
+                color: color,
+                life: 1.0, 
+                vy: -1 
+            });
+        }
+
         // --- SAVE / LOAD SYSTEM ---
         function saveGame() {
-            // Saves only permanent upgrades
             const save = {
                 magnet: inventory.magnet,
                 turretLevel: inventory.turretLevel,
@@ -1126,8 +1144,10 @@
         }
 
         function hardReset() {
-            if(confirm("ATENÃ‡ÃƒO: Isso apagarÃ¡ todo o seu progresso, upgrades e recordes. Tem certeza?")) {
+            if(confirm("ATENÇÃO: Isso apagará todo o seu progresso, upgrades e recordes. Tem certeza?")) {
                 localStorage.removeItem('neonSnakeSave');
+                videoContainer.style.display = 'none';
+                bgVideo.pause();
                 location.reload();
             }
         }
@@ -1135,7 +1155,7 @@
         // --- GAMEPLAY ---
 
         function startGame() {
-            loadGame(); // Load upgrades
+            loadGame(); 
             if (!actx) {
                 actx = new AudioContext();
                 masterGain = actx.createGain();
@@ -1145,6 +1165,7 @@
 
             menuEl.classList.add('hidden');
 
+            // Voz toca aqui, não no load
             playVoice('start', () => {
                 gameState = 'PLAYING';
                 playMusic('level');
@@ -1154,7 +1175,6 @@
         }
 
         function resetGame() {
-            // Snake segments with grid pos (px for interpolation)
             snake = [
                 { x: 10, y: 10, px: 10, py: 10 },
                 { x: 9, y: 10, px: 9, py: 10 },
@@ -1165,18 +1185,26 @@
             vel = { x: 1, y: 0 }; nextVel = { x: 1, y: 0 };
             score = 0; comboMultiplier = 0;
             activePowerUp = null; powerUp = null; hazards = [];
-            portals = []; drones = []; projectiles = []; boss = null;
+            portals = []; drones = []; projectiles = []; floatingTexts = []; boss = null;
+            
+            // GARANTE QUE COMEÇA NO BOSS 1
             currentBossLevel = 1;
-            nextBossScore = 600; // Adjusted for testing phase 1
+            nextBossScore = 600; 
 
-            // Inventory Logic: Keep upgrades, reset consumables (Shield)
             inventory.shield = 0;
-            // (Magnet, Turret, Ram persist from loadGame)
 
             bonusApple = null; bonusTimer = 0; nextBonusSpawn = Math.random() * 20000;
             scoreEl.innerText = 0; scoreEl.style.color = '#fff';
             bossBar.style.display = 'none'; bossHint.style.opacity = 0;
             wrapper.classList.remove('stealth-mode');
+            
+            // Reset visual boss 3
+            isFinalBossActive = false;
+            videoContainer.style.display = 'none';
+            bgVideo.pause();
+            wrapper.style.background = '#000';
+            canvas.style.background = 'radial-gradient(circle at center, #0a0a12 0%, #000000 100%)';
+
 
             spawnApple(); spawnPortals();
             updateStatus("MISSION START");
@@ -1200,17 +1228,16 @@
                 integrityFill.style.backgroundColor = 'var(--integrity-ok)';
             }
 
-            // Update Shield UI
             if (inventory.shield > 0) {
                 shieldTrack.style.display = 'block';
-                shieldFill.style.width = '100%'; // Simple binary visual for now or multi-segment
+                shieldFill.style.width = '100%'; 
             } else {
                 shieldFill.style.width = '0%';
                 setTimeout(() => { if (inventory.shield <= 0) shieldTrack.style.display = 'none'; }, 200);
             }
         }
 
-        // --- THE HYBRID LOOP ---
+        // --- LOOP ---
         function gameLoop(timestamp) {
             if (!timestamp) timestamp = performance.now();
 
@@ -1225,13 +1252,10 @@
             const dt = timestamp - lastTime;
             lastTime = timestamp;
 
-            // 1. Grid Logic (Snake) - Fixed Step
             let speed = BASE_SPEED;
             if (isDashing) speed = BASE_SPEED / 2.5;
             if (activePowerUp === 'slow' && !isDashing) speed = BASE_SPEED * 1.5;
 
-            // CORREÇÃO CRÍTICA: Permite que o timer rode mesmo se a cobra estiver parada,
-            // desde que haja uma intenção de movimento (nextVel), permitindo destravar após o recuo.
             if (vel.x !== 0 || vel.y !== 0 || nextVel.x !== 0 || nextVel.y !== 0) { 
                 logicTimer += dt; 
             }
@@ -1243,12 +1267,18 @@
                 logicTimer = 0;
             }
 
-            // 2. Free Logic (Enemies) - Continuous Update
-            updateEnemies(); // Runs every frame (60fps)
+            updateEnemies();
             updateParticles();
-            updateProjectiles(); // Turret shots
+            updateProjectiles(); 
+            
+            // Atualiza textos flutuantes
+            for(let i = floatingTexts.length - 1; i >= 0; i--) {
+                let ft = floatingTexts[i];
+                ft.y += ft.vy;
+                ft.life -= 0.02;
+                if(ft.life <= 0) floatingTexts.splice(i, 1);
+            }
 
-            // 3. Render with Interpolation
             let alpha = (vel.x === 0 && vel.y === 0) ? 1 : Math.min(1, logicTimer / speed);
             draw(alpha);
 
@@ -1263,7 +1293,7 @@
 
         function checkProgression() {
             if (score >= nextBossScore && !boss && gameState === 'PLAYING') {
-                openShop(); // Trigger Shop instead of direct boss
+                openShop(); 
             }
         }
 
@@ -1278,11 +1308,9 @@
         function updateShopUI() {
             shopCredits.innerText = score;
 
-            // Button States
             document.getElementById('btnShield').disabled = score < 200 || inventory.shield >= 1;
             document.getElementById('btnShield').innerText = inventory.shield >= 1 ? "MAX" : "COMPRAR";
 
-            // Magnet
             if (inventory.magnet) {
                 document.getElementById('btnMagnet').style.display = 'none';
                 document.getElementById('tagMagnet').classList.remove('hidden');
@@ -1290,7 +1318,6 @@
                 document.getElementById('btnMagnet').disabled = score < 400;
             }
 
-            // Turret
             const tLvl = inventory.turretLevel;
             let tPrice = 0;
             let tBtnText = "COMPRAR";
@@ -1305,7 +1332,6 @@
             btnTurret.innerText = tBtnText;
             btnTurret.disabled = score < tPrice || tLvl === 3;
 
-            // Ram
             if (inventory.ram) {
                 document.getElementById('btnRam').style.display = 'none';
                 document.getElementById('tagRam').classList.remove('hidden');
@@ -1345,6 +1371,7 @@
             initBossBattle();
         }
 
+        // --- INICIALIZAÇÃO DO BOSS ---
         function initBossBattle() {
             gameState = 'BOSS_INTRO';
             if (currentMusic) currentMusic.pause();
@@ -1352,18 +1379,28 @@
             let startX = canvas.width / 2;
             let startY = -100; 
 
-            // --- CARREGA DADOS ESPECÍFICOS DO BOSS ---
             const stats = BOSS_STATS[currentBossLevel];
 
             boss = {
                 x: startX, y: startY,
-                vx: (Math.random() > 0.5 ? 1 : -1) * 2,
-                vy: 2,
+                vx: 0, vy: 0,
                 hp: stats.hp,
                 maxHp: stats.hp,
                 level: currentBossLevel,
-                phase: 'enter'
+                phase: 'enter',
+                state: 'idle',
+                timer: 0,
+                angle: 0
             };
+
+            // LOGICA PARA BOSS 3 (VIDEO DE FUNDO INTEGRADO)
+            if (currentBossLevel === 3) {
+                isFinalBossActive = true;
+                videoContainer.style.display = 'block';
+                bgVideo.play().catch(e => console.log("Video autoplay blocked", e));
+                wrapper.style.background = 'transparent'; // Torna wrapper transparente
+                canvas.style.background = 'transparent'; // Remove gradiente do canvas
+            }
 
             playVoice('boss_spawn', () => {
                 gameState = 'PLAYING';
@@ -1382,6 +1419,7 @@
             if (activePowerUp && Date.now() > powerUpEndTime) { activePowerUp = null; updatePowerUpUI(); }
         }
 
+        // --- UPDATE ENEMIES ---
         function updateEnemies() {
             let droneCap = 0;
             let spawnChance = 0;
@@ -1429,6 +1467,16 @@
                     let sx = snake[j].x * GRID + GRID / 2;
                     let sy = snake[j].y * GRID + GRID / 2;
                     if (checkCollision(d.x, d.y, GRID / 3, sx, sy, GRID / 2)) {
+                        if (inventory.shield > 0) {
+                            inventory.shield--; 
+                            updateIntegrity(); 
+                            sfx('powerup');
+                            createExplosion(d.x, d.y, '#0088ff', 15);
+                            spawnFloatingText(d.x, d.y, "SHIELD DEFENSE", "#0088ff");
+                            drones.splice(i, 1);
+                            hitBody = true; 
+                            break;
+                        }
                         sfx('cut'); snake.length = j;
                         createExplosion(d.x, d.y, '#fff');
                         drones.splice(i, 1);
@@ -1443,45 +1491,69 @@
                 updateTurret();
             }
 
+            // --- LÓGICA DO CHEFE ---
             if (boss) {
-                // --- LÓGICA DE MOVIMENTO DO BOSS ATUALIZADA PARA USAR BOSS_STATS ---
                 const stats = BOSS_STATS[boss.level];
                 
+                // Fase de Entrada
                 if (boss.phase === 'enter') {
                     boss.y += 2;
-                    if (boss.y > 100) { boss.phase = 'fight'; boss.vy = 2; }
-                } else {
-                    boss.x += boss.vx;
-                    boss.y += boss.vy;
-
-                    if (boss.x < 40 || boss.x > canvas.width - 40) boss.vx *= -1;
-                    if (boss.y < 40 || boss.y > canvas.height - 40) boss.vy *= -1;
-
-                    if (Math.random() < 0.05) {
-                        let dx = targetX - boss.x;
-                        let dy = targetY - boss.y;
-                        boss.vx += (dx > 0 ? 0.1 : -0.1);
-                        boss.vy += (dy > 0 ? 0.1 : -0.1);
-
-                        // Usa a velocidade máxima definida no BOSS_STATS
-                        let maxSpeed = stats.speed;
-                        boss.vx = Math.max(-maxSpeed, Math.min(maxSpeed, boss.vx));
-                        boss.vy = Math.max(-maxSpeed, Math.min(maxSpeed, boss.vy));
+                    if (boss.y > 100) { 
+                        boss.phase = 'fight'; 
+                        boss.vx = (Math.random() > 0.5 ? 2 : -2);
+                        boss.vy = 2;
                     }
+                } else {
+                    // COMPORTAMENTO ESPECÍFICO DE CADA CHEFE
+                    if (boss.level === 1) updateBoss1Behavior(targetX, targetY);
+                    else if (boss.level === 2) updateBoss2Behavior(targetX, targetY);
+                    else if (boss.level === 3) updateBoss3Behavior(targetX, targetY);
                 }
 
+                // Colisão Boss vs Player
                 if (checkCollision(boss.x, boss.y, GRID * 1.5, targetX, targetY, GRID)) {
                     if (isDashing) {
                         boss.hp--; sfx('bossHit'); updateBossBar(); applyRecoil(1);
                         createExplosion(targetX, targetY, '#fff', 20);
-                        boss.vx = -boss.vx * 2;
-                        boss.vy = -boss.vy * 2;
+                        
+                        let recoilAngle = Math.atan2(boss.y - targetY, boss.x - targetX);
+                        let pushForce = 15; 
+                        boss.vx = Math.cos(recoilAngle) * pushForce;
+                        boss.vy = Math.sin(recoilAngle) * pushForce;
+
                         if (boss.hp <= 0) bossDeath();
                     } else {
                         takeDamage('boss');
+                        boss.vx = -boss.vx * 0.5;
+                        boss.vy = -boss.vy * 0.5;
                     }
                 }
             }
+        }
+
+        function findBestTarget(ignoreEntity) {
+            let best = null;
+            let minDst = 400; // Alcance máximo
+
+            let headX = snake[0].x * GRID;
+            let headY = snake[0].y * GRID;
+
+            // 1. Checa Boss
+            if (boss && boss !== ignoreEntity) {
+                let dist = Math.hypot(boss.x - headX, boss.y - headY);
+                if (dist < minDst) return boss;
+            }
+
+            // 2. Checa Drones
+            for (let d of drones) {
+                if (d === ignoreEntity) continue;
+                let dist = Math.hypot(d.x - headX, d.y - headY);
+                if (dist < minDst) {
+                    minDst = dist;
+                    best = d;
+                }
+            }
+            return best;
         }
 
         function updateTurret() {
@@ -1492,33 +1564,38 @@
             if (inventory.turretLevel === 3) cooldown = 200;
 
             if (now - lastTurretShot > cooldown) {
-                let target = null;
-                let minDst = 99999;
+                
+                let targetsToShoot = [];
 
-                if (boss) {
-                    let dst = Math.hypot(boss.x - (snake[1].x * GRID), boss.y - (snake[1].y * GRID));
-                    if (dst < 400) { target = boss; minDst = dst; }
+                let t1 = findBestTarget(null);
+                if (t1) targetsToShoot.push({ target: t1, sourceIndex: 1 });
+
+                if (snake.length >= 8) {
+                    let ignore = (t1 === boss) ? null : t1;
+                    let t2 = findBestTarget(ignore);
+                    if (t2) targetsToShoot.push({ target: t2, sourceIndex: Math.min(snake.length-1, 8) });
                 }
 
-                if (!target || minDst > 300) {
-                    for (let d of drones) {
-                        let dst = Math.hypot(d.x - (snake[1].x * GRID), d.y - (snake[1].y * GRID));
-                        if (dst < minDst && dst < 300) { target = d; minDst = dst; }
+                if (targetsToShoot.length > 0) {
+                    for (let shot of targetsToShoot) {
+                        let shooterSeg = snake[shot.sourceIndex];
+                        if (!shooterSeg) shooterSeg = snake[1];
+
+                        let sx = shooterSeg.x * GRID + GRID / 2;
+                        let sy = shooterSeg.y * GRID + GRID / 2;
+                        let tx = shot.target.x;
+                        let ty = shot.target.y;
+
+                        let angle = Math.atan2(ty - sy, tx - sx);
+                        angle += (Math.random() - 0.5) * 0.1; 
+
+                        projectiles.push({
+                            x: sx, y: sy,
+                            vx: Math.cos(angle) * 10,
+                            vy: Math.sin(angle) * 10,
+                            life: 50
+                        });
                     }
-                }
-
-                if (target) {
-                    let midIndex = Math.floor(snake.length / 2);
-                    let sx = snake[midIndex].x * GRID + GRID / 2;
-                    let sy = snake[midIndex].y * GRID + GRID / 2;
-
-                    let angle = Math.atan2(target.y - sy, target.x - sx);
-                    projectiles.push({
-                        x: sx, y: sy,
-                        vx: Math.cos(angle) * 8,
-                        vy: Math.sin(angle) * 8,
-                        life: 60
-                    });
                     sfx('shoot');
                     lastTurretShot = now;
                 }
@@ -1533,20 +1610,40 @@
                 p.life--;
 
                 let hit = false;
+                
+                // --- COLISÃO COM DRONES ---
                 for (let j = drones.length - 1; j >= 0; j--) {
                     if (checkCollision(p.x, p.y, 5, drones[j].x, drones[j].y, GRID / 2)) {
                         createExplosion(drones[j].x, drones[j].y, '#ff3333');
+                        
+                        spawnFloatingText(drones[j].x, drones[j].y, "KILL", "#ff3333");
+                        
+                        // --- VAMPIRISMO ---
+                        if (inventory.vampirism && inventory.shield < 1) {
+                            if (Math.random() < 0.2) { // 20% chance
+                                inventory.shield++;
+                                updateIntegrity();
+                                spawnFloatingText(snake[0].x*GRID, snake[0].y*GRID, "SHIELD RECHARGE", "#00ff44");
+                                sfx('powerup');
+                            }
+                        }
+                        
                         drones.splice(j, 1);
                         hit = true;
                         score += 10; 
                         break;
                     }
                 }
+                
+                // --- COLISÃO COM BOSS ---
                 if (!hit && boss) {
                     if (checkCollision(p.x, p.y, 5, boss.x, boss.y, GRID * 1.5)) {
-                        // --- DANO DA METRALHADORA BASEADO NO BOSS_STATS ---
-                        boss.hp -= BOSS_STATS[boss.level].turretDmg; 
+                        let dmg = BOSS_STATS[boss.level].turretDmg;
                         
+                        if (dmg < 0.05) spawnFloatingText(p.x, p.y, "RESIST", "#888");
+                        else spawnFloatingText(p.x, p.y, "-" + dmg.toFixed(1), "#ffff00");
+
+                        boss.hp -= dmg;
                         updateBossBar();
                         createExplosion(p.x, p.y, '#ffff00', 5);
                         hit = true;
@@ -1564,7 +1661,6 @@
         }
 
         function updateSnake() {
-            // CORREÇÃO: Se a cobra estiver parada (recoil) mas o jogador tentar mover (nextVel), aplica a velocidade
             if (vel.x === 0 && vel.y === 0 && (nextVel.x !== 0 || nextVel.y !== 0)) {
                 vel = nextVel;
             }
@@ -1650,6 +1746,13 @@
         }
 
         function takeDamage(source) {
+            // 1. COOLDOWN (INVENCIBILIDADE)
+            const now = Date.now();
+            if (now - lastDamageTime < 1000) return; 
+            
+            lastDamageTime = now; 
+
+            // 2. VERIFICA SE TEM ESCUDO
             if (inventory.shield > 0) {
                 sfx('powerup'); 
                 createExplosion(snake[0].x * GRID, snake[0].y * GRID, '#0088ff', 15);
@@ -1657,18 +1760,30 @@
                 updateIntegrity();
                 applyRecoil(2); 
                 damageText.innerText = "SHIELD ABSORB";
-                damageText.style.opacity = 1; setTimeout(() => damageText.style.opacity = 0, 1000);
+                damageText.style.opacity = 1; 
+                setTimeout(() => damageText.style.opacity = 0, 1000);
                 return; 
             }
 
+            // 3. DANO REAL
             if (snake.length <= 3) { die(); return; }
-            sfx('hurt'); wrapper.classList.add('damage-flash'); wrapper.classList.add('shake'); setTimeout(() => { wrapper.classList.remove('damage-flash'); wrapper.classList.remove('shake'); }, 400);
+
+            sfx('hurt'); 
+            wrapper.classList.add('damage-flash'); 
+            wrapper.classList.add('shake'); 
+            setTimeout(() => { wrapper.classList.remove('damage-flash'); wrapper.classList.remove('shake'); }, 400);
+
             let loss = Math.max(2, Math.floor(snake.length * 0.20));
             for (let k = 0; k < loss; k++) if (snake.length > 3) snake.pop();
-            comboMultiplier = 0; comboBox.classList.remove('combo-active');
+
+            comboMultiplier = 0; 
+            comboBox.classList.remove('combo-active');
             damageText.innerText = "HULL BREACH";
-            damageText.style.opacity = 1; setTimeout(() => damageText.style.opacity = 0, 1500);
-            updateIntegrity(); applyRecoil(3);
+            damageText.style.opacity = 1; 
+            setTimeout(() => damageText.style.opacity = 0, 1500);
+            
+            updateIntegrity(); 
+            applyRecoil(3);
         }
 
         function applyRecoil(force = 3) {
@@ -1691,6 +1806,15 @@
             bossHint.style.opacity = 0;
             drones = [];
             projectiles = [];
+            
+            // Se for Boss 3, remove video
+            if (isFinalBossActive) {
+                isFinalBossActive = false;
+                videoContainer.style.display = 'none';
+                bgVideo.pause();
+                wrapper.style.background = '#000';
+                canvas.style.background = 'radial-gradient(circle at center, #0a0a12 0%, #000000 100%)';
+            }
 
             score += 1000;
             updateStatus("TARGET DESTROYED");
@@ -1698,12 +1822,14 @@
 
             nextBossScore = score + 999999; 
 
+            // Se for o Boss 3, vence o jogo
             if (currentBossLevel === 3) {
                 gameState = 'WIN';
                 playVoice('boss_dead', () => {
                     winGame();
                 });
             } else {
+                // Se não, avança para o próximo boss
                 playVoice('boss_dead', () => {
                     gameState = 'PLAYING';
                     lastTime = performance.now();
@@ -1768,7 +1894,6 @@
             let p1 = { x: Math.floor(Math.random() * (TILES - 4)) + 2, y: Math.floor(Math.random() * (TILES - 4)) + 2 };
             let p2 = { x: Math.floor(Math.random() * (TILES - 4)) + 2, y: Math.floor(Math.random() * (TILES - 4)) + 2 };
             
-            // Simple complex portal structure
             let createPortal = (cx, cy) => {
                 return {
                     center: {x: cx, y: cy},
@@ -1783,24 +1908,26 @@
             sfx('die');
             gameState = 'GAMEOVER';
             
-            // Garante que a música antiga pare
             if (currentMusic) currentMusic.pause();
+            
+            // Stop video if dying at boss 3
+            if(isFinalBossActive) {
+                bgVideo.pause();
+                videoContainer.style.display = 'none';
+            }
 
-            // Toca a voz de gameover e, ao final, chama a música de MENU (Hunting for your dream)
             playVoice('gameover', () => {
                 playMusic('menu');
             });
 
             updateStatus("CRITICAL FAILURE");
             
-            // Mudança: Exibe a tela de Game Over em vez de alert/reload
             gameOverEl.classList.remove('hidden');
             finalScoreLose.innerText = "SCORE: " + score;
         }
 
         function retryGame() {
             gameOverEl.classList.add('hidden');
-            // Reinicia o jogo chamando a função de início existente
             startGame();
         }
 
@@ -1809,8 +1936,17 @@
         }
 
         function draw(alpha) {
-            ctx.fillStyle = '#050505'; 
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            // Se o boss 3 estiver ativo, limpamos o canvas para ver o video atras
+            // Caso contrário, desenha o fundo preto
+            if (isFinalBossActive) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                // Leve preenchimento para garantir que particulas brancas sejam visiveis
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.2)'; 
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            } else {
+                ctx.fillStyle = '#050505'; 
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
             
             ctx.strokeStyle = 'rgba(0, 255, 204, 0.05)'; 
             ctx.lineWidth = 1;
@@ -1859,8 +1995,8 @@
                 let by = boss.y;
                 let hoverY = Math.sin(now / 400) * 5; 
                 let tilt = (boss.vx * 0.1); 
+                if (boss.angle) tilt = boss.angle + Math.PI/2; 
                 
-                // --- COR DO BOSS BASEADA NO BOSS_STATS ---
                 let bColor = BOSS_STATS[boss.level].color;
                 
                 ctx.save();
@@ -1911,6 +2047,36 @@
             if(activePowerUp === 'slow') { snakeColor = '#00ccff'; isSpecial = true; }
             if(activePowerUp === 'x2') { snakeColor = '#ffd700'; isSpecial = true; }
             if(isDashing) snakeColor = '#ffffff';
+
+            // --- RASTRO NEON ---
+            ctx.beginPath();
+            ctx.lineWidth = 4;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            let trailColor = isDashing ? '#ffffff' : snakeColor;
+            ctx.strokeStyle = trailColor;
+            ctx.shadowColor = trailColor;
+            ctx.shadowBlur = 20;
+
+            if (snake.length > 1) {
+                let startX = lerp(snake[0].px, snake[0].x, alpha) * GRID + GRID/2;
+                let startY = lerp(snake[0].py, snake[0].y, alpha) * GRID + GRID/2;
+                ctx.moveTo(startX, startY);
+
+                for (let i = 1; i < snake.length; i++) {
+                    let segX = lerp(snake[i].px, snake[i].x, alpha) * GRID + GRID/2;
+                    let segY = lerp(snake[i].py, snake[i].y, alpha) * GRID + GRID/2;
+                    
+                    if (Math.abs(snake[i].x - snake[i-1].x) > 1 || Math.abs(snake[i].y - snake[i-1].y) > 1) {
+                        ctx.moveTo(segX, segY);
+                    } else {
+                        ctx.lineTo(segX, segY);
+                    }
+                }
+                ctx.stroke();
+            }
+            ctx.shadowBlur = 0;
+            // ------------------
 
             for (let i = 0; i < snake.length; i++) {
                 let seg = snake[i];
@@ -1973,6 +2139,18 @@
                 ctx.shadowBlur = 0;
             }
             drawParticles();
+
+            // Desenha textos flutuantes
+            for(let ft of floatingTexts) {
+                ctx.globalAlpha = Math.max(0, ft.life);
+                ctx.fillStyle = ft.color;
+                ctx.font = "bold 12px Orbitron";
+                ctx.strokeStyle = 'black';
+                ctx.lineWidth = 2;
+                ctx.strokeText(ft.text, ft.x, ft.y);
+                ctx.fillText(ft.text, ft.x, ft.y);
+            }
+            ctx.globalAlpha = 1.0;
         }
 
         function drawEntity(e, color, shape, scale = 1) {
@@ -2030,6 +2208,121 @@
             ctx.globalAlpha = 1.0;
         }
 
+        // ==========================================
+        // --- FUNÇÕES DE COMPORTAMENTO DOS BOSSES ---
+        // ==========================================
+
+        // BOSS 1: Movimento Padrão (Rebate na parede)
+        function updateBoss1Behavior(tx, ty) {
+            const stats = BOSS_STATS[1];
+
+            // Movimento constante
+            boss.x += boss.vx;
+            boss.y += boss.vy;
+
+            // Quica nas paredes
+            if (boss.x < 40 || boss.x > canvas.width - 40) boss.vx *= -1;
+            if (boss.y < 40 || boss.y > canvas.height - 40) boss.vy *= -1;
+
+            // IA Simples: De vez em quando ajusta a rota levemente na direção do player
+            if (Math.random() < 0.02) {
+                let dx = tx - boss.x;
+                let dy = ty - boss.y;
+                boss.vx += (dx > 0 ? 0.2 : -0.2);
+                boss.vy += (dy > 0 ? 0.2 : -0.2);
+
+                // Limita velocidade
+                boss.vx = Math.max(-stats.speed, Math.min(stats.speed, boss.vx));
+                boss.vy = Math.max(-stats.speed, Math.min(stats.speed, boss.vy));
+            }
+        }
+
+        // BOSS 2: Sniper/Dash (Para, Mira, Ataca)
+        function updateBoss2Behavior(tx, ty) {
+            boss.timer++;
+
+            // FASE 1: PERSEGUIÇÃO LENTA (0 a 100 frames)
+            if (boss.timer < 100) {
+                let dx = tx - boss.x;
+                let dy = ty - boss.y;
+                let angle = Math.atan2(dy, dx);
+                
+                boss.x += Math.cos(angle) * 2;
+                boss.y += Math.sin(angle) * 2;
+                boss.angle = angle;
+            }
+            // FASE 2: PREPARAR O BOTE (100 a 140 frames)
+            else if (boss.timer < 140) {
+                boss.vx = 0; boss.vy = 0;
+                boss.x += (Math.random() - 0.5) * 5; // Treme
+            }
+            // FASE 3: DASH VIOLENTO (No frame 140)
+            else if (boss.timer === 140) {
+                let dx = tx - boss.x;
+                let dy = ty - boss.y;
+                let attackAngle = Math.atan2(dy, dx);
+                
+                boss.vx = Math.cos(attackAngle) * 15; // Velocidade alta
+                boss.vy = Math.sin(attackAngle) * 15;
+                sfx('shoot');
+            }
+            // FASE 4: DESLIZAR (141 a 180 frames)
+            else if (boss.timer < 180) {
+                boss.x += boss.vx;
+                boss.y += boss.vy;
+                boss.vx *= 0.96; boss.vy *= 0.96; // Freio
+                
+                if (boss.x < 0 || boss.x > canvas.width) boss.vx *= -1;
+                if (boss.y < 0 || boss.y > canvas.height) boss.vy *= -1;
+            }
+            else {
+                boss.timer = 0; // Reinicia ciclo
+            }
+        }
+
+        // BOSS 3: Omega Tank (Física de Gelo/Drift + Vídeo de Fundo)
+        function updateBoss3Behavior(tx, ty) {
+            // Aplica Atrito
+            boss.vx *= 0.98;
+            boss.vy *= 0.98;
+
+            // 1. MOVIMENTAÇÃO ALEATÓRIA (Drift)
+            if (Math.random() < 0.05) {
+                let randomAngle = Math.random() * Math.PI * 2;
+                let thrust = 0.5; 
+                boss.vx += Math.cos(randomAngle) * thrust;
+                boss.vy += Math.sin(randomAngle) * thrust;
+            }
+
+            // 2. ATAQUE OCASIONAL (Acelera na sua direção)
+            if (Math.random() < 0.01) {
+                let dx = tx - boss.x;
+                let dy = ty - boss.y;
+                let attackAngle = Math.atan2(dy, dx);
+                boss.vx += Math.cos(attackAngle) * 2; 
+                boss.vy += Math.sin(attackAngle) * 2;
+            }
+
+            // Limite de Velocidade
+            let maxSpeed = 8;
+            let currentSpeed = Math.hypot(boss.vx, boss.vy);
+            if (currentSpeed > maxSpeed) {
+                let scale = maxSpeed / currentSpeed;
+                boss.vx *= scale;
+                boss.vy *= scale;
+            }
+
+            // Aplica movimento
+            boss.x += boss.vx;
+            boss.y += boss.vy;
+
+            // Colisão com Paredes
+            if (boss.x < 40) { boss.x = 40; boss.vx *= -0.8; }
+            if (boss.x > canvas.width - 40) { boss.x = canvas.width - 40; boss.vx *= -0.8; }
+            if (boss.y < 40) { boss.y = 40; boss.vy *= -0.8; }
+            if (boss.y > canvas.height - 40) { boss.y = canvas.height - 40; boss.vy *= -0.8; }
+        }
+
         // --- INPUT ---
         document.addEventListener('keydown', e => {
             if (e.key === 'ArrowUp' || e.key === 'w') { if (vel.y === 0) nextVel = { x: 0, y: -1 }; }
@@ -2048,11 +2341,13 @@
                 gameState = 'PAUSED';
                 pauseEl.classList.remove('hidden');
                 if (currentMusic) currentMusic.pause();
+                if (isFinalBossActive) bgVideo.pause();
             } else if (gameState === 'PAUSED') {
                 gameState = 'PLAYING';
                 pauseEl.classList.add('hidden');
                 lastTime = performance.now();
                 if (currentMusic) currentMusic.play();
+                if (isFinalBossActive) bgVideo.play();
                 requestAnimationFrame(gameLoop);
             }
         }
@@ -2090,5 +2385,6 @@
         btnDash.addEventListener('mouseup', () => { isDashing = false; });
 
     </script>
+    <script src="dev.js"></script>
 </body>
 </html>
